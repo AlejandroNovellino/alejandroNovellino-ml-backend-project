@@ -1,17 +1,22 @@
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # type: ignore
 from sqlalchemy import create_engine
 import pandas as pd
 
 
-load_dotenv()  # load the .env file variables
+# load the .env file variables
+load_dotenv()  #
 
 
-def db_connect():
-    import os
-    engine = create_engine(os.getenv('DATABASE_URL'))
+def db_connect() -> None:
+    """
+    Connects to the database using sqlalchemy
+    """
+
+    engine = create_engine(os.getenv("DATABASE_URL"))  # type: ignore
     engine.connect()
-    return 
+
+    return
 
 
 class DataLoadingError(Exception):
@@ -59,7 +64,7 @@ def load_data(file_path: str, url: str) -> pd.DataFrame:
         print(f"Loading data from file: {file_path}")
 
         # load the data form the file
-        df: pd.DataFrame = pd.read_csv(file_path) # type: ignore
+        df: pd.DataFrame = pd.read_csv(file_path)  # type: ignore
 
         # return the loaded dataframe form local file
         return df
@@ -70,10 +75,11 @@ def load_data(file_path: str, url: str) -> pd.DataFrame:
 
         try:
             # file not found so try to get the data from the URL
-            df: pd.DataFrame = pd.read_csv(url) #type: ignore
+            df: pd.DataFrame = pd.read_csv(url)  # type: ignore
 
             # save the DataFrame to the file for future use
-            df.to_csv(file_path)
+            df.to_csv(file_path, index=False)
+
             print(f"Data saved to file: {file_path}")
 
         except Exception as e:
