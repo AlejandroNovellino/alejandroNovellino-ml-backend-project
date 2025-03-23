@@ -1,4 +1,5 @@
 import os
+from typing import TypedDict, NotRequired
 from dotenv import load_dotenv  # type: ignore
 from sqlalchemy import create_engine
 import pandas as pd
@@ -23,7 +24,36 @@ class DataLoadingError(Exception):
     """Custom exception raised when data loading fails."""
 
 
-def load_data(file_path: str, url: str) -> pd.DataFrame:
+class ReadCsvParams(TypedDict):
+    """
+    Class for setting the parameters for reading a CSV file.
+
+    Attributes:
+        delimiter (str): Delimiter in the CSV file.
+        nrows (Optional[int]): Number of rows of file to read.
+    """
+
+    delimiter: str
+    nrows: NotRequired[int]
+
+
+class SaveCsvParams(TypedDict):
+    """
+    Class for setting the parameters for saving a CSV file.
+
+    Attributes:
+        sep (str): Delimiter in the output CSV file.
+    """
+
+    sep: str
+
+
+def load_data(
+    file_path: str,
+    url: str,
+    read_csv_params: ReadCsvParams,
+    save_csv_params: SaveCsvParams,
+) -> pd.DataFrame:
     """
     Loads data from a file if it exists, otherwise from a URL.
 
@@ -64,7 +94,7 @@ def load_data(file_path: str, url: str) -> pd.DataFrame:
         print(f"Loading data from file: {file_path}")
 
         # load the data form the file
-        df: pd.DataFrame = pd.read_csv(file_path)  # type: ignore
+        df = pd.read_csv(file_path, **read_csv_params)  # type: ignore
 
         # return the loaded dataframe form local file
         return df
@@ -75,10 +105,10 @@ def load_data(file_path: str, url: str) -> pd.DataFrame:
 
         try:
             # file not found so try to get the data from the URL
-            df: pd.DataFrame = pd.read_csv(url)  # type: ignore
+            df = pd.read_csv(url, **read_csv_params)  # type: ignore
 
             # save the DataFrame to the file for future use
-            df.to_csv(file_path, index=False)
+            df.to_csv(file_path, index=False, sep=save_csv_params["sep"])
 
             print(f"Data saved to file: {file_path}")
 
