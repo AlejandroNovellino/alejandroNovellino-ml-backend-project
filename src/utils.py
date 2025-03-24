@@ -1,12 +1,21 @@
 import os
-from typing import TypedDict, NotRequired
+from typing import TypedDict, NotRequired, Tuple
 from dotenv import load_dotenv  # type: ignore
 from sqlalchemy import create_engine
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 
 # load the .env file variables
-load_dotenv()  #
+load_dotenv()
+
+# constants for file paths
+# path to save the processed data
+X_TRAIN_PATH: str = "../data/processed/x_train.csv"
+X_TEST_PATH: str = "../data/processed/x_test.csv"
+
+Y_TRAIN_PATH: str = "../data/processed/y_train.csv"
+Y_TEST_PATH: str = "../data/processed/y_test.csv"
 
 
 def db_connect() -> None:
@@ -117,3 +126,28 @@ def load_data(
             raise DataLoadingError() from e
 
     return df
+
+
+def split_my_data(
+    X: pd.DataFrame, y: pd.Series, test_size: float, random_state: int
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
+    """
+    Wrapper for the sklearn tran_test function to have strict typing
+    Splits data into training and testing sets with strict type hints.
+
+    Args:
+        X: The features (input data). Can be a Pandas DataFrame or a NumPy array.
+        y: The target (output data). Can be a Pandas Series or a NumPy array.
+        test_size: The proportion of the dataset to include in the test split.
+        random_state: Controls the shuffling applied to the data before splitting.
+
+    Returns:
+        A tuple containing X_train, X_test, y_train, and y_test.
+
+    """
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=test_size, random_state=random_state
+    )
+
+    return X_train, X_test, y_train, y_test
