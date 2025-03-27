@@ -2,7 +2,7 @@ __pycache__
 .env
 .learn
 
-# Data & models folders in Data Science & Machine Learing Projecto
+# Data & models folders in Data Science & Machine Learing Project
 data/
 models/
 
