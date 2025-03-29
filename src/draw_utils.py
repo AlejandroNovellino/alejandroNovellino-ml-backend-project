@@ -7,6 +7,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+
 # helper function for the drawing functions ############################################################################
 
 def get_groups_for_confusion_matrix(confusion: pd.DataFrame):
@@ -28,7 +29,7 @@ def get_groups_for_confusion_matrix(confusion: pd.DataFrame):
 
 # drawing functions ####################################################################################################
 
-def draw_corr_matrix(corr: pd.DataFrame,) -> None:
+def draw_corr_matrix(corr: pd.DataFrame, ) -> None:
     """
     Draw a correlation matrix using seaborn.
 
@@ -80,7 +81,6 @@ def draw_confusion_matrix(confusion: pd.DataFrame) -> None:
     group_names = ['True Neg', 'False Pos', 'False Neg', 'True Pos']
     group_counts, group_percentages = get_groups_for_confusion_matrix(confusion=confusion)
 
-
     # labels to display
     labels = [f'{v1}\n{v2}\n{v3}' for v1, v2, v3 in zip(group_names, group_counts, group_percentages)]
     labels = np.asarray(labels).reshape(2, 2)
@@ -117,7 +117,7 @@ def draw_comparison_confusion_matrices(
         None
     """
 
-    _, axis = plt.subplots(1, 2, figsize = (20, 7))
+    _, axis = plt.subplots(1, 2, figsize=(20, 7))
 
     # create the groups to display
     group_names = ['True Neg', 'False Pos', 'False Neg', 'True Pos']
@@ -129,19 +129,25 @@ def draw_comparison_confusion_matrices(
     conf_2_group_counts, conf_2_group_percentages = get_groups_for_confusion_matrix(confusion=confusion_2)
 
     # labels to display of the first confusion matrix
-    conf_1_labels = [f'{v1}\n{v2}\n{v3}' for v1, v2, v3 in zip(group_names, conf_1_group_counts, conf_1_group_percentages)]
+    conf_1_labels = [f'{v1}\n{v2}\n{v3}' for v1, v2, v3 in
+                     zip(group_names, conf_1_group_counts, conf_1_group_percentages)]
     conf_1_labels = np.asarray(conf_1_labels).reshape(2, 2)
 
     # labels to display of the second confusion matrix
-    conf_2_labels = [f'{v1}\n{v2}\n{v3}' for v1, v2, v3 in zip(group_names, conf_2_group_counts, conf_2_group_percentages)]
+    conf_2_labels = [f'{v1}\n{v2}\n{v3}' for v1, v2, v3 in
+                     zip(group_names, conf_2_group_counts, conf_2_group_percentages)]
     conf_2_labels = np.asarray(conf_2_labels).reshape(2, 2)
 
     plt.figure(figsize=(10, 5))
 
     # first heatmap
-    sns.heatmap(ax=axis[0], data=confusion_1, annot=conf_1_labels, fmt='').set(xlabel = f'{confusion_matrix_1_name} - True label', ylabel = 'Predicted label')
+    sns.heatmap(ax=axis[0], data=confusion_1, annot=conf_1_labels, fmt='').set(
+        xlabel=f'{confusion_matrix_1_name} - True label', ylabel='Predicted label'
+        )
     # second heatmap
-    sns.heatmap(ax=axis[1], data=confusion_2, annot=conf_2_labels, fmt='').set(xlabel = f'{confusion_matrix_2_name} - True label', ylabel = 'Predicted label')
+    sns.heatmap(ax=axis[1], data=confusion_2, annot=conf_2_labels, fmt='').set(
+        xlabel=f'{confusion_matrix_2_name} - True label', ylabel='Predicted label'
+        )
 
     plt.tight_layout()
     plt.show()

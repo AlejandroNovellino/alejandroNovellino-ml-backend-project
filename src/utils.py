@@ -3,9 +3,7 @@ from typing import TypedDict, NotRequired, Tuple
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 import pandas as pd
-import numpy as np
 from sklearn.model_selection import train_test_split
-
 
 # load the .env file variables
 load_dotenv()
@@ -52,10 +50,10 @@ class SaveCsvParams(TypedDict):
 
 
 def load_data(
-    file_path: str,
-    url: str,
-    read_csv_params: ReadCsvParams,
-    save_csv_params: SaveCsvParams,
+        file_path: str,
+        url: str,
+        read_csv_params: ReadCsvParams,
+        save_csv_params: SaveCsvParams,
 ) -> pd.DataFrame:
     """
     Loads data from a file if it exists, otherwise from a URL.
@@ -125,10 +123,10 @@ def load_data(
 
 
 def split_my_data(
-    x: pd.DataFrame,
-    y: pd.Series,
-    test_size: float,
-    random_state: int
+        x: pd.DataFrame,
+        y: pd.Series,
+        test_size: float,
+        random_state: int
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
     """
     Wrapper for the sklearn tran_test function to have strict typing

@@ -7,7 +7,8 @@ from IPython.core.display_functions import display
 from IPython.display import Markdown
 
 
-def show_comparison_table(metric_names: list[str], default_metrics: list[float], optimized_metrics: list[float]) -> None:
+def show_comparison_table(metric_names: list[str], default_metrics: list[float],
+                          optimized_metrics: list[float]) -> None:
     """
     Creates and show a Markdown table comparing default and optimized model metrics.
 

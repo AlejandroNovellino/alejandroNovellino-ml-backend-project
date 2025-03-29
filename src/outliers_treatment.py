@@ -5,7 +5,8 @@ Utility functions for the treatment of outliers in dataframes.
 import numpy as np
 import pandas as pd
 
-def remove_outliers_iqr(df:pd.DataFrame, column_name: list[str]) -> pd.DataFrame:
+
+def remove_outliers_iqr(df: pd.DataFrame, column_name: list[str]) -> pd.DataFrame:
     """
     Removes outliers based on the IQR method.
 
@@ -29,7 +30,7 @@ def remove_outliers_iqr(df:pd.DataFrame, column_name: list[str]) -> pd.DataFrame
     return df_filtered
 
 
-def remove_outliers_zscore(df:pd.DataFrame, column_name: list[str], threshold: float = 3) -> pd.DataFrame:
+def remove_outliers_zscore(df: pd.DataFrame, column_name: list[str], threshold: float = 3) -> pd.DataFrame:
     """
     Removes outliers based on the z-score method.
 
@@ -49,7 +50,7 @@ def remove_outliers_zscore(df:pd.DataFrame, column_name: list[str], threshold: f
     return df_filtered
 
 
-def cap_outliers_iqr(df:pd.DataFrame, column_name: list[str]) -> pd.DataFrame:
+def cap_outliers_iqr(df: pd.DataFrame, column_name: list[str]) -> pd.DataFrame:
     """
     Caps outliers based on the IQR method.
 
