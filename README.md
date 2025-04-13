@@ -6,10 +6,9 @@ This boilerplate is designed to kickstart data science projects by providing a b
 
 The project is organized as follows:
 
-- `app.py` - The main Python script that you run for your project.
-- `explore.py` - A notebook to explore data, play around, visualize, clean, etc. Ideally the notebook code should be migrated to the app.py when moving to production.
-- `utils.py` - This file contains utility code for operations like database connections.
 - `requirements.txt` - This file contains the list of necessary python packages.
+- `noteboks` - Notebooks to do the exploration of the data and the model.
+- `src` - This folder contains utility code for operations like database connections.
 - `models/` - This directory should contain your SQLAlchemy model classes.
 - `data/` - This directory contains the following subdirectories:
   - `interin/` - For intermediate data that has been transformed.
