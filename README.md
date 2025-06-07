@@ -2,6 +2,14 @@
 
 This project provides a machine learning API for crop recommendation based on soil and weather features. It includes data exploration notebooks, model training, and a FastAPI-based prediction service.
 
+## **IMPORTANT NOTE**
+
+The project was developed on FastAPI because that was the tool we used for the final project.
+
+## Link to the deployed API
+
+The API is deployed in Render in the link: https://ml-backend-project.onrender.com/docs
+
 ## Project Structure
 
 - `notebooks/` — Jupyter notebooks for EDA and model training.
