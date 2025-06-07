@@ -1,88 +1,68 @@
-# Data Science Project Boilerplate
+# Crop Recommendation API
 
-This boilerplate is designed to kickstart data science projects by providing a basic setup for database connections, data processing, and machine learning model development. It includes a structured folder organization for your datasets and a set of pre-defined Python packages necessary for most data science tasks.
+This project provides a machine learning API for crop recommendation based on soil and weather features. It includes data exploration notebooks, model training, and a FastAPI-based prediction service.
 
-## Structure
+## Project Structure
 
-The project is organized as follows:
+- `notebooks/` — Jupyter notebooks for EDA and model training.
+- `models/` — Trained model and encoder files.
+- `api/` — FastAPI app and related code.
+- `requirements.txt` — Python dependencies.
 
-- `requirements.txt` - This file contains the list of necessary python packages.
-- `noteboks` - Notebooks to do the exploration of the data and the model.
-- `src` - This folder contains utility code for operations like database connections.
-- `models/` - This directory should contain your SQLAlchemy model classes.
-- `data/` - This directory contains the following subdirectories:
-  - `interin/` - For intermediate data that has been transformed.
-  - `processed/` - For the final data to be used for modeling.
-  - `raw/` - For raw data without any processing.
- 
-    
 ## Setup
 
-**Prerequisites**
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-url>
+   cd <your-project-directory>
+   ```
+   
+2. **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-Make sure you have Python 3.11+ installed on your. You will also need pip for installing the Python packages.
+3. **Set up environment variables. Create a .env file in the root directory:**
+    ```bash
+    KAGGLEHUB_CACHE=../.
+   ```
 
-**Installation**
+## Run the API:
+    ```bash
+    # for development
+    fastapi run ./api/main.py --reload
+    
+    # for production
+    uvicorn api.main:app
+    ```
 
-Clone the project repository to your local machine.
 
-Navigate to the project directory and install the required Python packages:
 
-```bash
-pip install -r requirements.txt
+## API Usage
+
+### Predict Crop Endpoint: POST /predict
+
+#### Request Body:
+```json
+{
+  "N": 90,
+  "P": 42,
+  "K": 43,
+  "temperature": 20.87974371,
+  "humidity": 82.00274423,
+  "ph": 6.502985292000001,
+  "rainfall": 202.9355362
+}
 ```
 
-**Create a database (if needed)**
 
-Create a new database within the Postgres engine by customizing and executing the following command: `$ createdb -h localhost -U <username> <db_name>`
-Connect to the Postgres engine to use your database, manipulate tables and data: `$ psql -h localhost -U <username> <db_name>`
-NOTE: Remember to check the ./.env file information to get the username and db_name.
-
-Once you are inside PSQL you will be able to create tables, make queries, insert, update or delete data and much more!
-
-**Environment Variables**
-
-Create a .env file in the project root directory to store your environment variables, such as your database connection string:
-
-```makefile
-DATABASE_URL="your_database_connection_url_here"
+#### Response 
+```json
+{
+  "crop": "rice"
+}
 ```
 
-## Running the Application
-
-To run the application, execute the app.py script from the root of the project directory:
-
-```bash
-python app.py
-```
-
-## Adding Models
-
-To add SQLAlchemy model classes, create new Python script files inside the models/ directory. These classes should be defined according to your database schema.
-
-Example model definition (`models/example_model.py`):
-
-```py
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
-
-Base = declarative_base()
-
-class ExampleModel(Base):
-    __tablename__ = 'example_table'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-
-```
-
-## Working with Data
-
-You can place your raw datasets in the data/raw directory, intermediate datasets in data/interim, and the processed datasets ready for analysis in data/processed.
-
-To process data, you can modify the app.py script to include your data processing steps, utilizing pandas for data manipulation and analysis.
-
-## Contributors
-
-This template was built as part of the 4Geeks Academy [Data Science and Machine Learning Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about [4Geeks Academy's BootCamp programs](https://4geeksacademy.com/us/programs) here.
-
-Other templates and resources like this can be found on the school GitHub page.
+## Notes
+- The model and encoder files must be present in the **models/** directory as model.pkl and encoder.pkl.
+- For development, you can use the provided Jupyter notebooks in **notebooks/** for EDA and model retraining.
