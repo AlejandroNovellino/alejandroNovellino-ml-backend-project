@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - AgroAI{% endblock %}
+
+{% block content %}
+<h1>Welcome to AgroAI</h1>
+<p>This system uses logistic regression to predict the optimal crop based on soil and climate conditions.</p>
+<ul>
+    <li>Soil Nitrogen, Phosphorus and Potassium</li>
+    <li>Average temperature and humidity</li>
+    <li>Soil pH and annual precipitation</li>
+</ul>
+<p>Enter your details to receive an accurate and efficient recommendation.</p>
+
+<div class="button-container">
+    <a href="/predict" class="button">Go to prediction form</a>
+</div>
+{% endblock %}

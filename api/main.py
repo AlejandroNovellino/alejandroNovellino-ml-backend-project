@@ -1,15 +1,15 @@
 import os
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from wrapper import LogisticRegressionModelWrapper
-from dtos import OnePredictionInputDto, OnePredictionOutputDto
-from mappers import map_to_output_dto
+from pathlib import Path
 
+from fastapi import FastAPI, Request, Depends, HTTPException
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
-# load environment variables
-load_dotenv()
-cors_url = os.getenv("CORS_URL")
+from api.packages.wrapper import LogisticRegressionModelWrapper
+from api.packages.dtos import OnePredictionInputDto
+
 
 # load the ML model
 model_wrapper = LogisticRegressionModelWrapper(
@@ -19,49 +19,40 @@ model_wrapper = LogisticRegressionModelWrapper(
 
 app = FastAPI()
 
-# CORS middleware configuration
-origins = [
-    cors_url,
-]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+BASE_DIR = Path(__file__).resolve().parent
+templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 
+@app.get("/", response_class=HTMLResponse)
+async def landing(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
-@app.get("/")
-def read_root():
-    return {"status": "Hi there! I'm classification API. I can help you choose what crop to plant."}
+@app.get("/predict", response_class=HTMLResponse)
+async def get_predict_form(request: Request):
+    return templates.TemplateResponse("form.html", {"request": request})
 
 
-@app.post("/predict")
-def predict(features_dto: OnePredictionInputDto) -> OnePredictionOutputDto:
-    """
-    Endpoint for doing one prediction.
-
-    Args:
-        features_dto (FeaturesDto): The features to do a prediction.
-    """
-
+@app.post("/predict", response_class=HTMLResponse)
+async def predict_crop(
+    request: Request,
+    form_data: OnePredictionInputDto = Depends(OnePredictionInputDto.as_form)
+):
     try:
         # get the data from the request as a dictionary
-        features: dict = features_dto.model_dump()
-        # mapp the model wrapper to the output dto
+        features: dict = form_data.model_dump()
+
+        # map the model wrapper to the output dto
         result = model_wrapper.predict_one(features)
 
-        # map from the model result to the output dto
-        output = map_to_output_dto(result)
+        return templates.TemplateResponse(
+            "form.html", {
+                "request": request,
+                "prediction": result.prediction
+            }
+        )
 
-        return output
-
-    except Exception as e:
-
-        print(e)
-
+    except Exception:
         raise HTTPException(
             status_code=500,
             detail="Error doing the prediction."

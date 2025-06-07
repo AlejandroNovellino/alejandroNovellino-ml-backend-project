@@ -2,8 +2,8 @@
 Mappers for transforming the data.
 """
 
-from dtos import OnePredictionOutputDto
-from wrapper_outputs import WrapperOutput
+from api.packages.dtos import OnePredictionOutputDto
+from api.packages.wrapper_outputs import WrapperOutput
 
 
 def map_to_output_dto(result: WrapperOutput) -> OnePredictionOutputDto:

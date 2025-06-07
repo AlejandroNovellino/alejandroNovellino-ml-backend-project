@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Predict crop - AgroAI{% endblock %}
+
+{% block content %}
+<h2>Prediction Form</h2>
+<form action="/predict" method="post">
+    <label>N (mg/kg):</label>
+    <input type="number" name="n" step="0.01" required>
+
+    <label>P (mg/kg):</label>
+    <input type="number" name="p" step="0.01" required>
+
+    <label>K (mg/kg):</label>
+    <input type="number" name="k" step="0.01" required>
+
+    <label>Temperature (°C):</label>
+    <input type="number" name="temperature" step="0.01" required>
+
+    <label>Humidity (%):</label>
+    <input type="number" name="humidity" step="0.01" required>
+
+    <label>pH:</label>
+    <input type="number" name="ph" step="0.01" required>
+
+    <label>Rainfall (mm):</label>
+    <input type="number" name="rainfall" step="0.01" required>
+
+    <input type="submit" value="Predict crop">
+</form>
+
+{% if prediction %}
+    <h3>🌱 Recommended crop: <span style="color:#22d3ee">{{ prediction }}</span></h3>
+{% endif %}
+
+{% endblock %}

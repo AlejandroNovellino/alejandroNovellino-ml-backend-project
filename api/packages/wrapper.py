@@ -3,7 +3,7 @@ Wrapper for the XGBoost model.
 """
 import joblib
 import pandas as pd
-from wrapper_outputs import WrapperOutput
+from api.packages.wrapper_outputs import WrapperOutput
 
 FEATURES_TO_ENCODE: list[str] = ['hotel', 'arrival_date_month', 'meal', 'country', 'market_segment',
                                  'distribution_channel', 'is_repeated_guest', 'reserved_room_type',
