@@ -66,3 +66,6 @@ def predict(features_dto: OnePredictionInputDto) -> OnePredictionOutputDto:
             status_code=500,
             detail="Error doing the prediction."
         )
+
+# handler for the deployment in vercel
+handler = app
