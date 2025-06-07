@@ -54,7 +54,7 @@ The deployed project is the one on the following repository [AlejandroNovellino]
 
 ## API Usage
 
-### Predict Crop Endpoint: POST /predict
+### Predict Crop values to test
 
 #### Request Body:
 ```json
