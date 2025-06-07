@@ -1,0 +1,11 @@
+jupyter
+matplotlib
+numpy
+pandas
+python-dotenv
+scikit-learn
+seaborn
+kagglehub
+fastapi[standard]
+plotly[express]
+joblib

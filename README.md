@@ -7,7 +7,8 @@ This project provides a machine learning API for crop recommendation based on so
 - `notebooks/` — Jupyter notebooks for EDA and model training.
 - `models/` — Trained model and encoder files.
 - `api/` — FastAPI app and related code.
-- `requirements.txt` — Python dependencies.
+- `requirements-dev.txt` — Python dependencies for development.
+- `requirements.txt` — Python dependencies for deployment.
 
 ## Setup
 
@@ -19,6 +20,9 @@ This project provides a machine learning API for crop recommendation based on so
    
 2. **Install dependencies:**
     ```bash
+    # for development
+    pip install -r requirements-dev.txt
+    # for deployment
     pip install -r requirements.txt
     ```
 
