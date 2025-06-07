@@ -259,3 +259,9 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Pycharm config
+.idea/
+
+# Datasets
+datasets/
